@@ -23,3 +23,11 @@ export interface Equipment{
 export interface Software{
   id: string;
 }
+
+export interface Person{
+  id: number;
+  sex: string;
+  first_name: string;
+  last_name: string;
+  blood_type: string;
+}
