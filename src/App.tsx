@@ -1,24 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Roles from './components/roles'
+import Teams from './components/teams'
+import People from './components/people'
+
+import {ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client'
 import './App.css';
 
+const menus: string[] = ['Roles', 'Teams', 'People'];
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000',
+  cache: new InMemoryCache()
+});
+
+interface MainComponent {
+  [key: string]: JSX.Element;
+}
+
+enum Menu{
+  Roles = 'Roles',
+  Teams = 'Teams',
+  People = 'People'
+}
+
 function App() {
+  const [menu, setMenu] = useState<string>(Menu.Roles);
+
+  let mainComp : MainComponent = {
+    'Roles': (<Roles />),
+    'Teams': (<Teams />),
+    'People': (<People />),
+  }
+
+  function NavMenus() {
+    return menus.map((_menu : string, key) => <li key={key} className={menu === _menu ? 'on' : ""} onClick={() => setMenu(_menu)}>{_menu}</li>)
+  }
+
   return (
     <div className="App">
+      <ApolloProvider client={client}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Company Management</h1>
+        <nav><ul>{NavMenus()}</ul></nav>
       </header>
+      <main>
+        {mainComp[menu]}
+      </main>
+      </ApolloProvider>
     </div>
   );
 }
