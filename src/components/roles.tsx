@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useQuery, gql} from '@apollo/client';
+import {Role, RoleIcon, Member, Equipment, Software} from '../interfaces';
 import './components.css';
 
 const GET_ROLES = gql`
@@ -31,31 +32,7 @@ const GET_ROLE = gql`
 `;
 
 
-enum Role{
-  Developer ='developer',
-  Desinger =  'designer',
-  Planner = 'planner'
-}
 
-interface RoleIcon{
-  developer: string;
-  designer: string;
-  planner: string;
-}
-
-interface Member{
-  id: string;
-  last_name: string;
-  serve_years: number;
-}
-
-interface Equipment{
-  id: string;
-}
-
-interface Software{
-  id: string;
-}
 
 function Roles() {
   

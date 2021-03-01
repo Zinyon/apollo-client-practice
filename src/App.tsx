@@ -24,7 +24,7 @@ enum Menu{
 }
 
 function App() {
-  const [menu, setMenu] = useState<string>(Menu.Roles);
+  const [menu, setMenu] = useState<string>(Menu.Teams);
 
   let mainComp : MainComponent = {
     'Roles': (<Roles />),
